@@ -47,90 +47,11 @@
         UIButton *backButton = [UIButton buttonWithType:101];  // left-pointing shape
         [backButton setTitle:@"Disconnect" forState:UIControlStateNormal];
         [backButton addTarget:self action:@selector(disconnect:) forControlEvents:UIControlEventTouchUpInside];
-        
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
         [[self navigationItem] setLeftBarButtonItem:backItem];
-        
-        [[self navigationItem] setTitle:@"RFduino LedBtn"];
+
     }
     return self;
-}
-
-- (void)iPhone5PortraitLayout
-{
-    label1.frame = CGRectMake(51,20,218,84);
-    button1.frame = CGRectMake(124,112,73,44);
-    
-    label2.frame = CGRectMake(51,279,218,84);
-    image1.frame = CGRectMake(123,371,75,75);
-}
-
-- (void)iPhone5LandscapeLayout
-{
-    label1.frame = CGRectMake(20,65,218,84);
-    button1.frame = CGRectMake(93,173,73,44);
-    
-    label2.frame = CGRectMake(330,65,218,84);
-    image1.frame = CGRectMake(402,157,75,75);
-}
-
-- (void)iPhone4SPortraitLayout
-{
-    label1.frame = CGRectMake(51,34,218,84);
-    button1.frame = CGRectMake(124,126,73,44);
-    
-    label2.frame = CGRectMake(51,211,218,84);
-    image1.frame = CGRectMake(123,303,75,75);
-}
-
-- (void)iPhone4SLandscapeLayout
-{
-    label1.frame = CGRectMake(20,45,218,84);
-    button1.frame = CGRectMake(93,153,73,44);
-    
-    label2.frame = CGRectMake(262,45,218,84);
-    image1.frame = CGRectMake(334,137,75,75);
-}
-
-- (void)iPadPortraitLayout
-{
-    label1.frame = CGRectMake(91,198,587,28);
-    button1.frame = CGRectMake(343,242,73,44);
-    
-    label2.frame = CGRectMake(113,648,543,38);
-    image1.frame = CGRectMake(347,694,75,75);
-}
-
-- (void)iPadLandscapeLayout
-{
-    label1.frame = CGRectMake(224,144,587,28);
-    button1.frame = CGRectMake(476,188,73,44);
-    
-    label2.frame = CGRectMake(241,462,543,38);
-    image1.frame = CGRectMake(475,508,75,75);
-}
-
-- (void)manualLayout
-{
-    CGRect rect = [[UIScreen mainScreen] bounds];
-    
-    if (UIDeviceOrientationIsLandscape(self.interfaceOrientation)) {
-        if (rect.size.height >= 1024) {
-            [self iPadLandscapeLayout];
-        } else if (rect.size.height >= 568) {
-            [self iPhone5LandscapeLayout];
-        } else {
-            [self iPhone4SLandscapeLayout];
-        }
-    } else {
-        if (rect.size.height >= 1024) {
-            [self iPadPortraitLayout];
-        } else if (rect.size.height >= 568) {
-            [self iPhone5PortraitLayout];
-        } else {
-            [self iPhone4SPortraitLayout];
-        }
-    }
 }
 
 - (void)viewDidLoad
@@ -153,15 +74,6 @@
     on = [UIImage imageNamed:@"on.jpg"];
 }
 
-- (void)viewDidLayoutSubviews {
-    [self manualLayout];
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [self manualLayout];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -170,8 +82,6 @@
 
 - (IBAction)disconnect:(id)sender
 {
-    NSLog(@"disconnect pressed");
-
     [rfduino disconnect];
 }
 
@@ -184,13 +94,11 @@
 
 - (IBAction)buttonTouchDown:(id)sender
 {
-    NSLog(@"TouchDown");
     [self sendByte:1];
 }
 
 - (IBAction)buttonTouchUpInside:(id)sender
 {
-    NSLog(@"TouchUpInside");
     [self sendByte:0];
 }
 

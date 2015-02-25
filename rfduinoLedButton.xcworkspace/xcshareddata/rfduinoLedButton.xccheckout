@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EF7534FA-6C9D-4613-AF52-3769EC1D0224</string>
+	<key>IDESourceControlProjectName</key>
+	<string>rfduinoLedButton</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>DD66CA4FBD2D4CC20339FD6E02991E8AFF75CEC4</key>
+		<string>https://github.com/casspangell/RFEstimote.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>rfduinoLedButton.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>DD66CA4FBD2D4CC20339FD6E02991E8AFF75CEC4</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/casspangell/RFEstimote.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>DD66CA4FBD2D4CC20339FD6E02991E8AFF75CEC4</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DD66CA4FBD2D4CC20339FD6E02991E8AFF75CEC4</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RFEstimote</string>
+		</dict>
+	</array>
+</dict>
+</plist>
