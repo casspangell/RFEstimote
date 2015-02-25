@@ -27,15 +27,15 @@
 #import <UIKit/UIKit.h>
 
 #import "RFduinoManagerDelegate.h"
-#import "ESTBeacon.h"
+//#import "ESTBeacon.h"
 
-typedef enum : int
+/*typedef enum : int
 {
     ESTScanTypeBluetooth,
     ESTScanTypeBeacon
     
 } ESTScanType;
-
+*/
 @class RFduinoManager;
 @class RFduino;
 
@@ -47,6 +47,6 @@ typedef enum : int
 /*
  * Selected beacon is returned on given completion handler.
  */
-- (id)initWithScanType:(ESTScanType)scanType completion:(void (^)(ESTBeacon *))completion;
+//- (id)initWithScanType:(ESTScanType)scanType completion:(void (^)(ESTBeacon *))completion;
 
 @end
