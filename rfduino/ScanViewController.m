@@ -32,6 +32,7 @@
 #import "RFduino.h"
 
 #import "AppViewController.h"
+#import "EstimoteScanViewController.h"
 
 #import "CustomCellBackground.h"
 #import "ESTBeaconManager.h"
@@ -327,7 +328,8 @@
 
 - (void)didLoadServiceRFduino:(RFduino *)rfduino
 {
-    AppViewController *viewController = [[AppViewController alloc] init];
+    //AppViewController *viewController = [[AppViewController alloc] init];
+    EstimoteScanViewController *viewController = [[EstimoteScanViewController alloc] init];
     viewController.rfduino = rfduino;
 
     loadService = true;

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1287E2F2D54173DC19F5A236 /* libPods-rfduinoLedButton.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0F394BC591052CDAFA6B86C /* libPods-rfduinoLedButton.a */; };
+		89CB6F991A9E3DD600B21F87 /* EstimoteScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89CB6F971A9E3DD600B21F87 /* EstimoteScanViewController.m */; };
+		89CB6F9A1A9E3DD600B21F87 /* EstimoteScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89CB6F981A9E3DD600B21F87 /* EstimoteScanViewController.xib */; };
 		AA07EB7A176BA47F00AB755D /* CustomCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = AA07EB79176BA47F00AB755D /* CustomCellBackground.m */; };
 		AA4D789117DFBCF70029ACE0 /* off.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA4D788F17DFBCF70029ACE0 /* off.jpg */; };
 		AA4D789217DFBCF70029ACE0 /* on.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA4D789017DFBCF70029ACE0 /* on.jpg */; };
@@ -36,6 +38,9 @@
 /* Begin PBXFileReference section */
 		7DE6DF1B96BC4AD4FB347973 /* Pods-rfduinoLedButton.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rfduinoLedButton.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rfduinoLedButton/Pods-rfduinoLedButton.debug.xcconfig"; sourceTree = "<group>"; };
 		88E9FEB4221460EFD0803854 /* Pods-rfduinoLedButton.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rfduinoLedButton.release.xcconfig"; path = "Pods/Target Support Files/Pods-rfduinoLedButton/Pods-rfduinoLedButton.release.xcconfig"; sourceTree = "<group>"; };
+		89CB6F961A9E3DD600B21F87 /* EstimoteScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EstimoteScanViewController.h; sourceTree = "<group>"; };
+		89CB6F971A9E3DD600B21F87 /* EstimoteScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EstimoteScanViewController.m; sourceTree = "<group>"; };
+		89CB6F981A9E3DD600B21F87 /* EstimoteScanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EstimoteScanViewController.xib; sourceTree = "<group>"; };
 		AA07EB78176BA47F00AB755D /* CustomCellBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCellBackground.h; sourceTree = "<group>"; };
 		AA07EB79176BA47F00AB755D /* CustomCellBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCellBackground.m; sourceTree = "<group>"; };
 		AA4D788F17DFBCF70029ACE0 /* off.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = off.jpg; path = rfduinoLedButton/off.jpg; sourceTree = SOURCE_ROOT; };
@@ -56,9 +61,9 @@
 		AAC4274816C9D4A500149784 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		AAC4274A16C9D4A500149784 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		AAC4274C16C9D4A500149784 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		AAC4276116C9D52700149784 /* AppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppViewController.h; sourceTree = "<group>"; };
-		AAC4276216C9D52700149784 /* AppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppViewController.m; sourceTree = "<group>"; };
-		AAC4276316C9D52700149784 /* AppViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppViewController.xib; sourceTree = "<group>"; };
+		AAC4276116C9D52700149784 /* AppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppViewController.h; path = rfduinoLedButton/AppViewController.h; sourceTree = "<group>"; };
+		AAC4276216C9D52700149784 /* AppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppViewController.m; path = rfduinoLedButton/AppViewController.m; sourceTree = "<group>"; };
+		AAC4276316C9D52700149784 /* AppViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppViewController.xib; path = rfduinoLedButton/AppViewController.xib; sourceTree = "<group>"; };
 		AAC4276616C9D6B200149784 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		AAC427B916C9DC9B00149784 /* RFduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduino.h; sourceTree = "<group>"; };
 		AAC427BA16C9DC9B00149784 /* RFduino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFduino.m; sourceTree = "<group>"; };
@@ -110,6 +115,10 @@
 				AA4D788F17DFBCF70029ACE0 /* off.jpg */,
 				AAC427B716C9DC9B00149784 /* rfduino */,
 				AAC4273C16C9D4A500149784 /* Estimote */,
+				AAC4276116C9D52700149784 /* AppViewController.h */,
+				AAC4276216C9D52700149784 /* AppViewController.m */,
+				AAC4276316C9D52700149784 /* AppViewController.xib */,
+				AAC4273D16C9D4A500149784 /* Supporting Files */,
 				AAC4273516C9D4A500149784 /* Frameworks */,
 				AAC4273316C9D4A500149784 /* Products */,
 				1769D59DEC21C107CCE729A0 /* Pods */,
@@ -140,10 +149,9 @@
 		AAC4273C16C9D4A500149784 /* Estimote */ = {
 			isa = PBXGroup;
 			children = (
-				AAC4276116C9D52700149784 /* AppViewController.h */,
-				AAC4276216C9D52700149784 /* AppViewController.m */,
-				AAC4276316C9D52700149784 /* AppViewController.xib */,
-				AAC4273D16C9D4A500149784 /* Supporting Files */,
+				89CB6F961A9E3DD600B21F87 /* EstimoteScanViewController.h */,
+				89CB6F971A9E3DD600B21F87 /* EstimoteScanViewController.m */,
+				89CB6F981A9E3DD600B21F87 /* EstimoteScanViewController.xib */,
 			);
 			name = Estimote;
 			path = rfduinoLedButton;
@@ -161,6 +169,7 @@
 				AAC4274C16C9D4A500149784 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			path = rfduinoLedButton;
 			sourceTree = "<group>";
 		};
 		AAC427B716C9DC9B00149784 /* rfduino */ = {
@@ -236,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAC4274116C9D4A500149784 /* InfoPlist.strings in Resources */,
+				89CB6F9A1A9E3DD600B21F87 /* EstimoteScanViewController.xib in Resources */,
 				AAC4274916C9D4A500149784 /* Default.png in Resources */,
 				AAC4274B16C9D4A500149784 /* Default@2x.png in Resources */,
 				AAC4274D16C9D4A500149784 /* Default-568h@2x.png in Resources */,
@@ -294,6 +304,7 @@
 				AAC427C216C9DC9B00149784 /* RFduino.m in Sources */,
 				AAC427C316C9DC9B00149784 /* RfduinoManager.m in Sources */,
 				AAC427C416C9DC9B00149784 /* ScanViewController.m in Sources */,
+				89CB6F991A9E3DD600B21F87 /* EstimoteScanViewController.m in Sources */,
 				AAC428BB16C9FE1300149784 /* AppDelegate.m in Sources */,
 				AA07EB7A176BA47F00AB755D /* CustomCellBackground.m in Sources */,
 			);
