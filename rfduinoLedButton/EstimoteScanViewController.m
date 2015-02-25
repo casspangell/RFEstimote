@@ -56,12 +56,119 @@
     
     self.region = [[ESTBeaconRegion alloc] initWithProximityUUID:ESTIMOTE_PROXIMITY_UUID
                                                       identifier:@"EstimoteSampleRegion"];
+    /*
+     * Starts looking for Estimote beacons.
+     * All callbacks will be delivered to beaconManager delegate.
+     */
+    if (self.scanType == ESTScanTypeBeacon)
+    {
+        [self startRangingBeacons];
+    }
+    else
+    {
+        [self.beaconManager startEstimoteBeaconsDiscoveryForRegion:self.region];
+    }
 }
 
 #pragma mark - Arduino Methods
 - (IBAction)disconnect:(id)sender
 {
     [_rfduino disconnect];
+}
+
+
+#pragma mark - ESTBeaconManager delegate
+
+
+- (void)beaconManager:(ESTBeaconManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    if (self.scanType == ESTScanTypeBeacon)
+    {
+        [self startRangingBeacons];
+    }
+}
+
+-(void)startRangingBeacons
+{
+    if ([ESTBeaconManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
+    {
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
+            /*
+             * No need to explicitly request permission in iOS < 8, will happen automatically when starting ranging.
+             */
+            [self.beaconManager startRangingBeaconsInRegion:self.region];
+        } else {
+            /*
+             * Request permission to use Location Services. (new in iOS 8)
+             * We ask for "always" authorization so that the Notification Demo can benefit as well.
+             * Also requires NSLocationAlwaysUsageDescription in Info.plist file.
+             *
+             * For more details about the new Location Services authorization model refer to:
+             * https://community.estimote.com/hc/en-us/articles/203393036-Estimote-SDK-and-iOS-8-Location-Services
+             */
+            [self.beaconManager requestAlwaysAuthorization];
+        }
+    }
+    else if([ESTBeaconManager authorizationStatus] == kCLAuthorizationStatusAuthorized)
+    {
+        [self.beaconManager startRangingBeaconsInRegion:self.region];
+    }
+    else if([ESTBeaconManager authorizationStatus] == kCLAuthorizationStatusDenied)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Access Denied"
+                                                        message:@"You have denied access to location services. Change this in app settings."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles: nil];
+        
+        [alert show];
+    }
+    else if([ESTBeaconManager authorizationStatus] == kCLAuthorizationStatusRestricted)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Not Available"
+                                                        message:@"You have no access to location services."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles: nil];
+        
+        [alert show];
+    }
+}
+
+- (void)beaconManager:(ESTBeaconManager *)manager rangingBeaconsDidFailForRegion:(ESTBeaconRegion *)region withError:(NSError *)error
+{
+    UIAlertView* errorView = [[UIAlertView alloc] initWithTitle:@"Ranging error"
+                                                        message:error.localizedDescription
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+    
+    [errorView show];
+}
+
+- (void)beaconManager:(ESTBeaconManager *)manager monitoringDidFailForRegion:(ESTBeaconRegion *)region withError:(NSError *)error
+{
+    UIAlertView* errorView = [[UIAlertView alloc] initWithTitle:@"Monitoring error"
+                                                        message:error.localizedDescription
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+    
+    [errorView show];
+}
+
+- (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
+{
+    self.beaconsArray = [[NSArray alloc] initWithArray:beacons];
+    
+    [self.tableView reloadData];
+}
+
+- (void)beaconManager:(ESTBeaconManager *)manager didDiscoverBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
+{
+    self.beaconsArray = [[NSArray alloc] initWithArray:beacons];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -73,7 +180,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return [self.beaconsArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -86,13 +193,29 @@
 
     }
     
-   // cell.textLabel.text = text;
-   // cell.detailTextLabel.text = detail;
-   // cell.detailTextLabel.numberOfLines = 3;
+    ESTBeacon *beacon = [self.beaconsArray objectAtIndex:indexPath.row];
+    
+    if ([beacon.major integerValue] != 1) {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"MacAddress: %@", [beacon macAddress]];
+        cell.imageView.image = [UIImage imageNamed:@"beacon_linear.png"];
+        //cell.detailTextLabel.text = [NSString stringWithFormat:@"Distance: %.2f ", [beacon.distance floatValue]];
+        //cell.detailTextLabel.numberOfLines = 3;
+    }
+
    
     return cell;
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    /*
+     *Stops ranging after exiting the view.
+     */
+    [self.beaconManager stopRangingBeaconsInRegion:self.region];
+    [self.beaconManager stopEstimoteBeaconDiscovery];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

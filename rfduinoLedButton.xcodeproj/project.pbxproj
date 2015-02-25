@@ -10,6 +10,7 @@
 		1287E2F2D54173DC19F5A236 /* libPods-rfduinoLedButton.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0F394BC591052CDAFA6B86C /* libPods-rfduinoLedButton.a */; };
 		89CB6F991A9E3DD600B21F87 /* EstimoteScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89CB6F971A9E3DD600B21F87 /* EstimoteScanViewController.m */; };
 		89CB6F9A1A9E3DD600B21F87 /* EstimoteScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89CB6F981A9E3DD600B21F87 /* EstimoteScanViewController.xib */; };
+		89CB6F9C1A9E455500B21F87 /* beacon_linear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89CB6F9B1A9E455500B21F87 /* beacon_linear@2x.png */; };
 		AA07EB7A176BA47F00AB755D /* CustomCellBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = AA07EB79176BA47F00AB755D /* CustomCellBackground.m */; };
 		AA4D789117DFBCF70029ACE0 /* off.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA4D788F17DFBCF70029ACE0 /* off.jpg */; };
 		AA4D789217DFBCF70029ACE0 /* on.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA4D789017DFBCF70029ACE0 /* on.jpg */; };
@@ -41,6 +42,7 @@
 		89CB6F961A9E3DD600B21F87 /* EstimoteScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EstimoteScanViewController.h; sourceTree = "<group>"; };
 		89CB6F971A9E3DD600B21F87 /* EstimoteScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EstimoteScanViewController.m; sourceTree = "<group>"; };
 		89CB6F981A9E3DD600B21F87 /* EstimoteScanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EstimoteScanViewController.xib; sourceTree = "<group>"; };
+		89CB6F9B1A9E455500B21F87 /* beacon_linear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beacon_linear@2x.png"; sourceTree = "<group>"; };
 		AA07EB78176BA47F00AB755D /* CustomCellBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCellBackground.h; sourceTree = "<group>"; };
 		AA07EB79176BA47F00AB755D /* CustomCellBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCellBackground.m; sourceTree = "<group>"; };
 		AA4D788F17DFBCF70029ACE0 /* off.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = off.jpg; path = rfduinoLedButton/off.jpg; sourceTree = SOURCE_ROOT; };
@@ -107,6 +109,7 @@
 		AAC4272716C9D4A500149784 = {
 			isa = PBXGroup;
 			children = (
+				89CB6F9B1A9E455500B21F87 /* beacon_linear@2x.png */,
 				AA4D789D17E0052C0029ACE0 /* icon-72.png */,
 				AA4D789E17E0052C0029ACE0 /* icon-144.png */,
 				AA4D789F17E0052C0029ACE0 /* icon.png */,
@@ -255,6 +258,7 @@
 				AA4D78A117E0052C0029ACE0 /* icon-72.png in Resources */,
 				AA4D78A217E0052C0029ACE0 /* icon-144.png in Resources */,
 				AA4D78A317E0052C0029ACE0 /* icon.png in Resources */,
+				89CB6F9C1A9E455500B21F87 /* beacon_linear@2x.png in Resources */,
 				AA4D78A417E0052C0029ACE0 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
