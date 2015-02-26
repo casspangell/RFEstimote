@@ -330,8 +330,8 @@
 - (void)didLoadServiceRFduino:(RFduino *)rfduino
 {
     //AppViewController *viewController = [[AppViewController alloc] init];
-    EstimoteScanViewController *viewController = [[EstimoteScanViewController alloc] init];
-    viewController.rfduino = rfduino;
+    EstimoteScanViewController *viewController = [[EstimoteScanViewController alloc] initWithScanType:ESTScanTypeBeacon andRFDuino:rfduino];
+   // viewController.rfduino = rfduino;
 
     loadService = true;
     [[self navigationController] pushViewController:viewController animated:YES];

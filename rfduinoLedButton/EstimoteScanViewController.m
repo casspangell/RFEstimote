@@ -8,6 +8,7 @@
 
 #import "EstimoteScanViewController.h"
 #import "ESTBeaconManager.h"
+#import "RFduino.h"
 
 @interface EstimoteScanViewController ()
 
@@ -22,13 +23,13 @@
 
 @implementation EstimoteScanViewController
 
-- (id)initWithScanType:(ESTScanType)scanType completion:(void (^)(ESTBeacon *))completion
-{
+- (id)initWithScanType:(ESTScanType)scanType andRFDuino:(RFduino *)duino {
+    
     self = [super init];
     if (self)
     {
         self.scanType = scanType;
-        self.completion = [completion copy];
+        self.rfduino = duino;
     }
     return self;
 }
@@ -53,7 +54,7 @@
     self.beaconManager = [[ESTBeaconManager alloc] init];
     self.beaconManager.delegate = self;
     self.beaconManager.returnAllRangedBeaconsAtOnce = YES;
-    
+   // self.scanType = ESTScanTypeBeacon;
     self.region = [[ESTBeaconRegion alloc] initWithProximityUUID:ESTIMOTE_PROXIMITY_UUID
                                                       identifier:@"EstimoteSampleRegion"];
     /*
@@ -90,6 +91,7 @@
 
 -(void)startRangingBeacons
 {
+
     if ([ESTBeaconManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
     {
         if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
@@ -133,6 +135,7 @@
         
         [alert show];
     }
+
 }
 
 - (void)beaconManager:(ESTBeaconManager *)manager rangingBeaconsDidFailForRegion:(ESTBeaconRegion *)region withError:(NSError *)error
@@ -160,14 +163,12 @@
 - (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
 {
     self.beaconsArray = [[NSArray alloc] initWithArray:beacons];
-    
     [self.tableView reloadData];
 }
 
 - (void)beaconManager:(ESTBeaconManager *)manager didDiscoverBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
 {
     self.beaconsArray = [[NSArray alloc] initWithArray:beacons];
-    
     [self.tableView reloadData];
 }
 
@@ -196,7 +197,7 @@
     ESTBeacon *beacon = [self.beaconsArray objectAtIndex:indexPath.row];
     
     if ([beacon.major integerValue] != 1) {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"MacAddress: %@", [beacon macAddress]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"Major: %@ Minor: %@", [beacon major], [beacon minor]];
         cell.imageView.image = [UIImage imageNamed:@"beacon_linear.png"];
         //cell.detailTextLabel.text = [NSString stringWithFormat:@"Distance: %.2f ", [beacon.distance floatValue]];
         //cell.detailTextLabel.numberOfLines = 3;

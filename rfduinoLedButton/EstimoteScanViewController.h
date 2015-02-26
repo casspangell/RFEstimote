@@ -26,9 +26,6 @@ typedef enum : int
 
 @property(strong) IBOutlet UITableView *tableView;
 
-/*
- * Selected beacon is returned on given completion handler.
- */
-- (id)initWithScanType:(ESTScanType)scanType completion:(void (^)(ESTBeacon *))completion;
+- (id)initWithScanType:(ESTScanType)scanType andRFDuino:(RFduino *)duino;
 
 @end
