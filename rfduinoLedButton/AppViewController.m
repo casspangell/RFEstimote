@@ -73,8 +73,6 @@
     [_minorLabel setText:[NSString stringWithFormat:@"%@", [_beacon minor]]];
     [_rfLabel setText:[_rfduino name]];
     
-    NSLog(@"%@ %@ %@",[NSString stringWithFormat:@"%@", [_beacon major]], [NSString stringWithFormat:@"%@", [_beacon minor]], [_rfduino name]);
-    
     [_rfduino setDelegate:self];
 
     UIColor *start = [UIColor colorWithRed:58/255.0 green:108/255.0 blue:183/255.0 alpha:0.15];
@@ -86,8 +84,19 @@
     gradient.colors = [NSArray arrayWithObjects:(id)start.CGColor, (id)stop.CGColor, nil];
     [self.view.layer insertSublayer:gradient atIndex:0];
     
-    off = [UIImage imageNamed:@"off.jpg"];
-    on = [UIImage imageNamed:@"on.jpg"];
+    /*
+     * BeaconManager setup.
+     */
+    self.beaconManager = [[ESTBeaconManager alloc] init];
+    self.beaconManager.delegate = self;
+    
+    self.beaconRegion = [[ESTBeaconRegion alloc] initWithProximityUUID:self.beacon.proximityUUID
+                                                                 major:[self.beacon.major unsignedIntValue]
+                                                                 minor:[self.beacon.minor unsignedIntValue]
+                                                            identifier:@"RegionIdentifier"
+                                                               secured:self.beacon.isSecured];
+    
+    [self.beaconManager startRangingBeaconsInRegion:self.beaconRegion];
 }
 
 - (void)didReceiveMemoryWarning
@@ -131,6 +140,33 @@
         [image1 setImage:on];
     else
         [image1 setImage:off];
+}
+
+#pragma mark - ESTBeaconManager delegate
+
+- (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
+{
+    ESTBeacon *firstBeacon = [beacons firstObject];
+    
+    [self updateDotPositionForDistance:[firstBeacon.distance floatValue]];
+}
+
+- (void)updateDotPositionForDistance:(float)distance
+{
+    NSLog(@"distance: %f", distance);
+    
+    if (distance > 0) {
+        [self sendByte:1];
+    }else{
+        [self sendByte:0];
+    }
+    
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self.beaconManager stopRangingBeaconsInRegion:self.beaconRegion];
 }
 
 @end

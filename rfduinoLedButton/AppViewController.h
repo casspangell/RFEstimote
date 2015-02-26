@@ -28,8 +28,9 @@
 
 #import "RFduino.h"
 #import "ESTBeacon.h"
+#import "ESTBeaconManager.h"
 
-@interface AppViewController : UIViewController<RFduinoDelegate>
+@interface AppViewController : UIViewController<RFduinoDelegate, ESTBeaconManagerDelegate>
 {
     __weak IBOutlet UILabel *label1;
     __weak IBOutlet UIButton *button1;
@@ -43,6 +44,8 @@
 
 @property(strong, nonatomic) RFduino *rfduino;
 @property(strong, nonatomic) ESTBeacon *beacon;
+@property (nonatomic, strong) ESTBeaconManager  *beaconManager;
+@property (nonatomic, strong) ESTBeaconRegion   *beaconRegion;
 @property(nonatomic) IBOutlet UILabel *majorLabel;
 @property(nonatomic) IBOutlet UILabel *minorLabel;
 @property(nonatomic) IBOutlet UILabel *rfLabel;
