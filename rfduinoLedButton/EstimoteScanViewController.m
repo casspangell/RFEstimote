@@ -9,6 +9,7 @@
 #import "EstimoteScanViewController.h"
 #import "ESTBeaconManager.h"
 #import "RFduino.h"
+#import "AppViewController.h"
 
 @interface EstimoteScanViewController ()
 
@@ -172,6 +173,7 @@
     [self.tableView reloadData];
 }
 
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -197,15 +199,23 @@
     ESTBeacon *beacon = [self.beaconsArray objectAtIndex:indexPath.row];
     
     if ([beacon.major integerValue] != 1) {
-        cell.textLabel.text = [NSString stringWithFormat:@"Distance: %.2f", [beacon.distance floatValue]];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"Major: %@ Minor: %@", [beacon major], [beacon minor]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"Distance: %.2f", [beacon.distance floatValue]];
+        cell.textLabel.text = [NSString stringWithFormat:@"Major: %@ Minor: %@", [beacon major], [beacon minor]];
         cell.imageView.image = [UIImage imageNamed:@"beacon_linear.png"];
-        //cell.detailTextLabel.text = [NSString stringWithFormat:@"Distance: %.2f ", [beacon.distance floatValue]];
-        //cell.detailTextLabel.numberOfLines = 3;
     }
 
    
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ESTBeacon *beacon = [_beaconsArray objectAtIndex:[indexPath row]];
+    
+    AppViewController *viewController = [[AppViewController alloc] initWithBeacon:beacon andRFDuino:_rfduino];
+    [self.navigationController pushViewController:viewController animated:YES];
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

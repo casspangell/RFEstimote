@@ -28,10 +28,9 @@
 
 
 #import "AppViewController.h"
+#import "ESTBeaconManager.h"
 
 @implementation AppViewController
-
-@synthesize rfduino;
 
 + (void)load
 {
@@ -54,12 +53,24 @@
     return self;
 }
 
+- (id)initWithBeacon:(ESTBeacon*)estimote andRFDuino:(RFduino *)duino {
+    
+    self = [super init];
+    if (self)
+    {
+        self.beacon = estimote;
+        self.rfduino = duino;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
- 
-    [rfduino setDelegate:self];
+    NSLog(@"%@ %@", _beacon, _rfduino);
+    
+    [_rfduino setDelegate:self];
 
     UIColor *start = [UIColor colorWithRed:58/255.0 green:108/255.0 blue:183/255.0 alpha:0.15];
     UIColor *stop = [UIColor colorWithRed:58/255.0 green:108/255.0 blue:183/255.0 alpha:0.45];
@@ -82,14 +93,14 @@
 
 - (IBAction)disconnect:(id)sender
 {
-    [rfduino disconnect];
+    [_rfduino disconnect];
 }
 
 - (void)sendByte:(uint8_t)byte
 {
     uint8_t tx[1] = { byte };
     NSData *data = [NSData dataWithBytes:(void*)&tx length:1];
-    [rfduino send:data];
+    [_rfduino send:data];
 }
 
 - (IBAction)buttonTouchDown:(id)sender

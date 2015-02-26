@@ -27,6 +27,7 @@
 #import <UIKit/UIKit.h>
 
 #import "RFduino.h"
+#import "ESTBeacon.h"
 
 @interface AppViewController : UIViewController<RFduinoDelegate>
 {
@@ -41,8 +42,11 @@
 }
 
 @property(strong, nonatomic) RFduino *rfduino;
+@property(strong, nonatomic) ESTBeacon *beacon;
 
 - (IBAction)buttonTouchDown:(id)sender;
 - (IBAction)buttonTouchUpInside:(id)sender;
+
+- (id)initWithBeacon:(ESTBeacon*)estimote andRFDuino:(RFduino *)duino;
 
 @end
