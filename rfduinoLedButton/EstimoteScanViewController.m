@@ -76,6 +76,7 @@
 - (IBAction)disconnect:(id)sender
 {
     [_rfduino disconnect];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
