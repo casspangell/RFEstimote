@@ -43,6 +43,10 @@
 
 @property(strong, nonatomic) RFduino *rfduino;
 @property(strong, nonatomic) ESTBeacon *beacon;
+@property(nonatomic) IBOutlet UILabel *majorLabel;
+@property(nonatomic) IBOutlet UILabel *minorLabel;
+@property(nonatomic) IBOutlet UILabel *rfLabel;
+
 
 - (IBAction)buttonTouchDown:(id)sender;
 - (IBAction)buttonTouchUpInside:(id)sender;

@@ -68,7 +68,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSLog(@"%@ %@", _beacon, _rfduino);
+    
+    [_majorLabel setText:[NSString stringWithFormat:@"%@", [_beacon major]]];
+    [_minorLabel setText:[NSString stringWithFormat:@"%@", [_beacon minor]]];
+    [_rfLabel setText:[_rfduino name]];
+    
+    NSLog(@"%@ %@ %@",[NSString stringWithFormat:@"%@", [_beacon major]], [NSString stringWithFormat:@"%@", [_beacon minor]], [_rfduino name]);
     
     [_rfduino setDelegate:self];
 
