@@ -197,6 +197,7 @@
     ESTBeacon *beacon = [self.beaconsArray objectAtIndex:indexPath.row];
     
     if ([beacon.major integerValue] != 1) {
+        cell.textLabel.text = [NSString stringWithFormat:@"Distance: %.2f", [beacon.distance floatValue]];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"Major: %@ Minor: %@", [beacon major], [beacon minor]];
         cell.imageView.image = [UIImage imageNamed:@"beacon_linear.png"];
         //cell.detailTextLabel.text = [NSString stringWithFormat:@"Distance: %.2f ", [beacon.distance floatValue]];
