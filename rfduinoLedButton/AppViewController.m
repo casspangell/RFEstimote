@@ -74,7 +74,10 @@
     [_rfLabel setText:[_rfduino name]];
     
     [_rfduino setDelegate:self];
-
+   /*
+    actionToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 416, 320, 44)];
+    actionButton = [[UIBarButtonItem alloc] initWithTitle:@"No Action" style:UIBarButtonItemStyleBordered target:self action:@selector(noAction:)];
+    [a*/
     UIColor *start = [UIColor colorWithRed:58/255.0 green:108/255.0 blue:183/255.0 alpha:0.15];
     UIColor *stop = [UIColor colorWithRed:58/255.0 green:108/255.0 blue:183/255.0 alpha:0.45];
     
@@ -155,12 +158,31 @@
 {
     NSLog(@"distance: %f", distance);
     
-    if (distance > 0) {
-        [self sendByte:1];
-    }else{
-        [self sendByte:0];
+    float value = 255*distance;
+
+    if (value > 255) {
+        int new = 255 - value;
+        value = new;
     }
     
+    if (value < 0) {
+        value = value*-1;
+    }
+    
+    NSInteger intValue = floor(value);
+    NSInteger intValue2 = floor(intValue / 3);
+    NSInteger intValue3 = floor(intValue / 4);
+    
+    NSLog(@"%d %d %d", intValue, intValue2, intValue3);
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    [arr addObject:[NSNumber numberWithInteger:intValue]];
+    [arr addObject:[NSNumber numberWithInteger:intValue2]];
+    [arr addObject:[NSNumber numberWithInteger:intValue3]];
+    
+    int length = [arr count];
+
+    [self sendByte:arr];
+
     
 }
 

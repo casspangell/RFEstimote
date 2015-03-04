@@ -38,6 +38,9 @@
     __weak IBOutlet UILabel *label2;
     __weak IBOutlet UIImageView *image1;
     
+    UIToolbar *actionToolbar;
+    UIBarButtonItem *actionButton;
+    
     UIImage *off;
     UIImage *on;
 }
