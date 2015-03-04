@@ -20,9 +20,12 @@ typedef enum : int
 
 @interface EstimoteScanViewController : UIViewController <RFduinoDelegate, ESTBeaconManagerDelegate, UITableViewDelegate, UITableViewDataSource> {
     
+    
 }
 
 @property(strong, nonatomic) RFduino *rfduino;
+@property(strong, nonatomic) NSMutableArray *cellSelected;
+@property(strong, nonatomic) ESTBeacon *beacon;
 
 @property(strong) IBOutlet UITableView *tableView;
 

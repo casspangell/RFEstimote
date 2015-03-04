@@ -45,11 +45,12 @@
     [_tableView setDataSource:self];
     
     // Custom initialization
-    UIButton *backButton = [UIButton buttonWithType:101];  // left-pointing shape
-    [backButton setTitle:@"Disconnect" forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(disconnect:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"Disconnect" style:UIButtonTypeSystem target:self action:@selector(disconnect:)];
     [[self navigationItem] setLeftBarButtonItem:backItem];
+    UIBarButtonItem *selectItem = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIButtonTypeSystem target:self action:@selector(selectBeacons:)];
+    [[self navigationItem] setRightBarButtonItem:selectItem];
+    
+    _cellSelected = [NSMutableArray array];
     
     //Estimote Beacons
     self.beaconManager = [[ESTBeaconManager alloc] init];
@@ -72,11 +73,16 @@
     }
 }
 
-#pragma mark - Arduino Methods
+#pragma mark - Methods
 - (IBAction)disconnect:(id)sender
 {
     [_rfduino disconnect];
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (IBAction)selectBeacons:(id)sender{
+    AppViewController *viewController = [[AppViewController alloc] initWithBeacon:_cellSelected andRFDuino:_rfduino];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 
@@ -196,8 +202,14 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
 
     }
-    
+
     ESTBeacon *beacon = [self.beaconsArray objectAtIndex:indexPath.row];
+    
+    if ([_cellSelected containsObject:beacon]) {
+        [cell setBackgroundColor:[UIColor redColor]];
+    }else{
+        [cell setBackgroundColor:[UIColor clearColor]];
+    }
     
     if ([beacon.major integerValue] != 1) {
         cell.detailTextLabel.text = [NSString stringWithFormat:@"Distance: %.2f", [beacon.distance floatValue]];
@@ -211,12 +223,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ESTBeacon *beacon = [_beaconsArray objectAtIndex:[indexPath row]];
-    
-    AppViewController *viewController = [[AppViewController alloc] initWithBeacon:beacon andRFDuino:_rfduino];
-    [self.navigationController pushViewController:viewController animated:YES];
+    _beacon = [_beaconsArray objectAtIndex:[indexPath row]];
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    //the below code will allow multiple selection
+    if ([_cellSelected containsObject:_beacon])
+    {
+        [_cellSelected removeObject:_beacon];
+    }
+    else
+    {
+        [_cellSelected addObject:_beacon];
+    }
+    
+    NSLog(@"%@", _cellSelected);
+    [tableView reloadData];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

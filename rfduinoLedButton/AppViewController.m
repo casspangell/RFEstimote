@@ -53,12 +53,13 @@
     return self;
 }
 
-- (id)initWithBeacon:(ESTBeacon*)estimote andRFDuino:(RFduino *)duino {
+- (id)initWithBeacon:(NSArray*)estimotes andRFDuino:(RFduino *)duino {
     
     self = [super init];
     if (self)
     {
-        self.beacon = estimote;
+        self.beacon = [estimotes objectAtIndex:0];
+        _beaconArray = estimotes;
         self.rfduino = duino;
     }
     return self;
@@ -69,15 +70,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [_majorLabel setText:[NSString stringWithFormat:@"%@", [_beacon major]]];
-    [_minorLabel setText:[NSString stringWithFormat:@"%@", [_beacon minor]]];
+    //[_majorLabel setText:[NSString stringWithFormat:@"%@", [_beacon major]]];
+    //[_minorLabel setText:[NSString stringWithFormat:@"%@", [_beacon minor]]];
     [_rfLabel setText:[_rfduino name]];
     
     [_rfduino setDelegate:self];
-   /*
-    actionToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 416, 320, 44)];
-    actionButton = [[UIBarButtonItem alloc] initWithTitle:@"No Action" style:UIBarButtonItemStyleBordered target:self action:@selector(noAction:)];
-    [a*/
+    
     UIColor *start = [UIColor colorWithRed:58/255.0 green:108/255.0 blue:183/255.0 alpha:0.15];
     UIColor *stop = [UIColor colorWithRed:58/255.0 green:108/255.0 blue:183/255.0 alpha:0.45];
     
@@ -111,6 +109,7 @@
 - (IBAction)disconnect:(id)sender
 {
     [_rfduino disconnect];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)sendByte:(uint8_t)byte
@@ -170,14 +169,11 @@
     }
     
     NSInteger intValue = floor(value);
-    NSInteger intValue2 = floor(intValue / 3);
-    NSInteger intValue3 = floor(intValue / 4);
     
-    NSLog(@"%d %d %d", intValue, intValue2, intValue3);
+    NSLog(@"%d %d %d", intValue, intValue, intValue);
     NSMutableArray *arr = [[NSMutableArray alloc] init];
     [arr addObject:[NSNumber numberWithInteger:intValue]];
-    [arr addObject:[NSNumber numberWithInteger:intValue2]];
-    [arr addObject:[NSNumber numberWithInteger:intValue3]];
+
     
     int length = [arr count];
 

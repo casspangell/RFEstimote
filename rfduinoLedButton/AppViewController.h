@@ -38,15 +38,13 @@
     __weak IBOutlet UILabel *label2;
     __weak IBOutlet UIImageView *image1;
     
-    UIToolbar *actionToolbar;
-    UIBarButtonItem *actionButton;
-    
     UIImage *off;
     UIImage *on;
 }
 
 @property(strong, nonatomic) RFduino *rfduino;
 @property(strong, nonatomic) ESTBeacon *beacon;
+@property(strong, nonatomic) NSArray *beaconArray;
 @property (nonatomic, strong) ESTBeaconManager  *beaconManager;
 @property (nonatomic, strong) ESTBeaconRegion   *beaconRegion;
 @property(nonatomic) IBOutlet UILabel *majorLabel;
@@ -57,6 +55,6 @@
 - (IBAction)buttonTouchDown:(id)sender;
 - (IBAction)buttonTouchUpInside:(id)sender;
 
-- (id)initWithBeacon:(ESTBeacon*)estimote andRFDuino:(RFduino *)duino;
+- (id)initWithBeacon:(NSArray*)estimotes andRFDuino:(RFduino *)duino;
 
 @end

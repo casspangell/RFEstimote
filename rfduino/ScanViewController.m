@@ -42,30 +42,12 @@
     bool editingRow;
     bool loadService;
 }
-/*
-@property (nonatomic, copy)     void (^completion)(ESTBeacon *);
-@property (nonatomic, assign)   ESTScanType scanType;
 
-@property (nonatomic, strong) ESTBeaconManager *beaconManager;
-@property (nonatomic, strong) ESTBeaconRegion *region;
-@property (nonatomic, strong) NSArray *beaconsArray;
-*/
 @end
 
 
 @implementation ScanViewController
 
-/*- (id)initWithScanType:(ESTScanType)scanType completion:(void (^)(ESTBeacon *))completion
-{
-    self = [super init];
-    if (self)
-    {
-        self.scanType = scanType;
-        self.completion = [completion copy];
-    }
-    return self;
-}
-*/
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -101,15 +83,7 @@
     gradient.frame = CGRectMake(0.0, 0.0, 1024.0, 1024.0);
     gradient.colors = [NSArray arrayWithObjects:(id)start.CGColor, (id)stop.CGColor, nil];
     [self.tableView.layer insertSublayer:gradient atIndex:0];
-   /*
-    //Estimote Beacons
-    self.beaconManager = [[ESTBeaconManager alloc] init];
-    self.beaconManager.delegate = self;
-    self.beaconManager.returnAllRangedBeaconsAtOnce = YES;
-    
-    self.region = [[ESTBeaconRegion alloc] initWithProximityUUID:ESTIMOTE_PROXIMITY_UUID
-                                                      identifier:@"EstimoteSampleRegion"];
-    */
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -341,9 +315,9 @@
 {
     NSLog(@"didDisconnectRFduino");
     
-    if (loadService) {
+   // if (loadService) {
         [[self navigationController] popViewControllerAnimated:YES];
-    }
+   // }
 
     [rfduinoManager startScan];
     [self.tableView reloadData];
