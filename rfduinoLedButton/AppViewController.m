@@ -149,22 +149,13 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-- (void)sendByte:(uint8_t)byte
+- (void)sendByte:(uint8_t)byte :(int)len
 {
     uint8_t tx[1] = { byte };
-    NSData *data = [NSData dataWithBytes:(void*)&tx length:1];
+    NSData *data = [NSData dataWithBytes:(void*)&tx length:len];
     [_rfduino send:data];
 }
 
-- (IBAction)buttonTouchDown:(id)sender
-{
-    [self sendByte:1];
-}
-
-- (IBAction)buttonTouchUpInside:(id)sender
-{
-    [self sendByte:0];
-}
 
 - (void)didReceive:(NSData *)data
 {
@@ -232,18 +223,18 @@
         }
         
         str = [NSString stringWithFormat:@"%d-%d-%d", rC, gC, bC];
-
+        NSLog(@"%@", str);
     }
 
     
     uint8_t *byte = (uint8_t)[str intValue];
     
-   // [self updateDotPositionForDistance:str];
+    [self updateDotPositionForDistance:byte :[str length]];
 }
 
-- (void)updateDotPositionForDistance:(float)distance
+- (void)updateDotPositionForDistance:(uint8_t)distance :(int)len
 {
-    [self sendByte:distance];
+    [self sendByte:distance :len];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
