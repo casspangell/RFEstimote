@@ -30,6 +30,8 @@
 #import "AppViewController.h"
 #import "ESTBeaconManager.h"
 
+#define ESTIMOTE_PROXIMITY_UUID             [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"]
+
 @implementation AppViewController
 
 + (void)load
@@ -58,8 +60,30 @@
     self = [super init];
     if (self)
     {
-        self.beacon = [estimotes objectAtIndex:0];
+        if ([estimotes count] > 0) {
+            self.beacon = [estimotes objectAtIndex:0];
+        }
+        
         _beaconArray = estimotes;
+        _beaconDict = [NSMutableDictionary new];
+        
+        //Assign each beacon as an R or G or B
+        NSArray *colorArr = [[NSArray alloc] initWithObjects:@"r", @"g", @"b", nil];
+        int count = 0;
+        
+        for (int i=0; i<[_beaconArray count]; i++) {
+            
+            if (count > 2) {
+                count = 0;
+            }
+            
+            [_beaconDict setObject:[colorArr objectAtIndex:count] forKey:[_beaconArray objectAtIndex:i]];
+            
+            count ++;
+        }
+        
+        count = 0;
+        
         self.rfduino = duino;
     }
     return self;
@@ -85,19 +109,32 @@
     gradient.colors = [NSArray arrayWithObjects:(id)start.CGColor, (id)stop.CGColor, nil];
     [self.view.layer insertSublayer:gradient atIndex:0];
     
+    [self runThroughBeacons];
+}
+
+- (void) runThroughBeacons {
     /*
      * BeaconManager setup.
      */
     self.beaconManager = [[ESTBeaconManager alloc] init];
     self.beaconManager.delegate = self;
     
-    self.beaconRegion = [[ESTBeaconRegion alloc] initWithProximityUUID:self.beacon.proximityUUID
-                                                                 major:[self.beacon.major unsignedIntValue]
-                                                                 minor:[self.beacon.minor unsignedIntValue]
-                                                            identifier:@"RegionIdentifier"
-                                                               secured:self.beacon.isSecured];
+   // for (int i=0; i<[_beaconArray count]; i++) {
+   //     ESTBeacon *beacon = [_beaconArray objectAtIndex:i];
+       /*
+        self.beaconRegion = [[ESTBeaconRegion alloc] initWithProximityUUID:beacon.proximityUUID
+                                                                     major:[beacon.major unsignedIntValue]
+                                                                     minor:[beacon.minor unsignedIntValue]
+                                                                identifier:@"RegionIdentifier"
+                                                                   secured:beacon.isSecured];
+        */
     
-    [self.beaconManager startRangingBeaconsInRegion:self.beaconRegion];
+        _beaconRegion = [[ESTBeaconRegion alloc] initWithProximityUUID:ESTIMOTE_PROXIMITY_UUID
+                                                          identifier:@"EstimoteSampleRegion"];
+        
+        [self.beaconManager startRangingBeaconsInRegion:self.beaconRegion];
+   // }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -148,38 +185,51 @@
 
 - (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
 {
-    ESTBeacon *firstBeacon = [beacons firstObject];
+    ESTBeacon *beacon = [ESTBeacon new];
+    R = 0;
+    G = 0;
+    B = 0;
     
-    [self updateDotPositionForDistance:[firstBeacon.distance floatValue]];
+    for (int i=0; i<[beacons count]; i++) {
+        beacon = [beacons objectAtIndex:i];
+        
+        if (([beacon.major integerValue] != 1) && ([beacon.distance floatValue] != -1)) {
+
+            //Take float value and put it in porportion to 255 and truncate decimal
+            NSString *num = [NSString stringWithFormat:@"%f", [beacon.distance floatValue]];
+            NSArray *arr = [num componentsSeparatedByString:@"."];
+            float dec = [[NSString stringWithFormat:@".%@", [arr objectAtIndex:1]] floatValue];
+            NSString *proportion = [NSString stringWithFormat:@"%f", 255 * dec];
+            NSArray *wholeNum = [proportion componentsSeparatedByString:@"."];
+            int fVal = [[wholeNum objectAtIndex:0] intValue];
+            
+            
+            
+            NSString *val = [_beaconDict objectForKey:beacon];
+            if ([val isEqualToString:@"r"]) {
+                NSLog(@"%d", fVal);
+                NSLog(@"r %f", [beacon.distance floatValue]);
+            }
+            if ([val isEqualToString:@"g"]){
+          
+                NSLog(@"g %f", [beacon.distance floatValue]);
+            }
+            if ([val isEqualToString:@"b"]){
+               
+                NSLog(@"b %f", [beacon.distance floatValue]);
+            }
+            
+        }
+    }
+    
+    //RG value for 2 beacons.
+    
+   // [self updateDotPositionForDistance:[firstBeacon.distance floatValue]e];
 }
 
 - (void)updateDotPositionForDistance:(float)distance
 {
-    NSLog(@"distance: %f", distance);
-    
-    float value = 255*distance;
-
-    if (value > 255) {
-        int new = 255 - value;
-        value = new;
-    }
-    
-    if (value < 0) {
-        value = value*-1;
-    }
-    
-    NSInteger intValue = floor(value);
-    
-    NSLog(@"%d %d %d", intValue, intValue, intValue);
-    NSMutableArray *arr = [[NSMutableArray alloc] init];
-    [arr addObject:[NSNumber numberWithInteger:intValue]];
-
-    
-    int length = [arr count];
-
-    [self sendByte:arr];
-
-    
+    [self sendByte:distance];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

@@ -211,7 +211,7 @@
         [cell setBackgroundColor:[UIColor clearColor]];
     }
     
-    if ([beacon.major integerValue] != 1) {
+    if (([beacon.major integerValue] != 1) && ([beacon.distance floatValue] != -1)) {
         cell.detailTextLabel.text = [NSString stringWithFormat:@"Distance: %.2f", [beacon.distance floatValue]];
         cell.textLabel.text = [NSString stringWithFormat:@"Major: %@ Minor: %@", [beacon major], [beacon minor]];
         cell.imageView.image = [UIImage imageNamed:@"beacon_linear.png"];

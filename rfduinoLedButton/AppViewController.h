@@ -40,11 +40,16 @@
     
     UIImage *off;
     UIImage *on;
+    
+    int R;
+    int G;
+    int B;
 }
 
 @property(strong, nonatomic) RFduino *rfduino;
 @property(strong, nonatomic) ESTBeacon *beacon;
 @property(strong, nonatomic) NSArray *beaconArray;
+@property(strong, nonatomic) NSMutableDictionary *beaconDict;
 @property (nonatomic, strong) ESTBeaconManager  *beaconManager;
 @property (nonatomic, strong) ESTBeaconRegion   *beaconRegion;
 @property(nonatomic) IBOutlet UILabel *majorLabel;
