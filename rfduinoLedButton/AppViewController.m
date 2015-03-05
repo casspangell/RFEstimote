@@ -186,9 +186,15 @@
 - (void)beaconManager:(ESTBeaconManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(ESTBeaconRegion *)region
 {
     ESTBeacon *beacon = [ESTBeacon new];
-    R = 0;
-    G = 0;
-    B = 0;
+    NSString *str;
+    
+    R = 1;
+    G = 1;
+    B = 1;
+
+    int rC = 0;
+    int gC = 0;
+    int bC = 0;
     
     for (int i=0; i<[beacons count]; i++) {
         beacon = [beacons objectAtIndex:i];
@@ -196,6 +202,7 @@
         if (([beacon.major integerValue] != 1) && ([beacon.distance floatValue] != -1)) {
 
             //Take float value and put it in porportion to 255 and truncate decimal
+            //Take average of multiple R's, G's, and B's
             NSString *num = [NSString stringWithFormat:@"%f", [beacon.distance floatValue]];
             NSArray *arr = [num componentsSeparatedByString:@"."];
             float dec = [[NSString stringWithFormat:@".%@", [arr objectAtIndex:1]] floatValue];
@@ -203,28 +210,35 @@
             NSArray *wholeNum = [proportion componentsSeparatedByString:@"."];
             int fVal = [[wholeNum objectAtIndex:0] intValue];
             
-            
-            
             NSString *val = [_beaconDict objectForKey:beacon];
             if ([val isEqualToString:@"r"]) {
-                NSLog(@"%d", fVal);
-                NSLog(@"r %f", [beacon.distance floatValue]);
-            }
-            if ([val isEqualToString:@"g"]){
-          
-                NSLog(@"g %f", [beacon.distance floatValue]);
-            }
-            if ([val isEqualToString:@"b"]){
                
-                NSLog(@"b %f", [beacon.distance floatValue]);
+                rC = (rC + fVal)/R;
+                R += 1;
+            }
+            
+            if ([val isEqualToString:@"g"]){
+                
+                gC = (gC + fVal)/G;
+                G += 1;
+            }
+            
+            if ([val isEqualToString:@"b"]){
+                
+                bC = (bC + fVal)/B;
+                B += 1;
             }
             
         }
+        
+        str = [NSString stringWithFormat:@"%d-%d-%d", rC, gC, bC];
+
     }
+
     
-    //RG value for 2 beacons.
+    uint8_t *byte = (uint8_t)[str intValue];
     
-   // [self updateDotPositionForDistance:[firstBeacon.distance floatValue]e];
+   // [self updateDotPositionForDistance:str];
 }
 
 - (void)updateDotPositionForDistance:(float)distance
